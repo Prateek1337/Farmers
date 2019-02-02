@@ -1,7 +1,9 @@
 package com.example.prateek.farmers;
 
 import android.content.Intent;
+import android.graphics.drawable.AnimationDrawable;
 import android.os.CpuUsageInfo;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -35,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        RecyclerView CropList = (RecyclerView) findViewById(R.id.recyclerView);
+        RecyclerView CropList = (RecyclerView) findViewById(R.id.recyclerView);;
         cropList=new ArrayList<>();
 
         cropList.add(new Crop(R.drawable.wheat,"Wheat","1","2"));
