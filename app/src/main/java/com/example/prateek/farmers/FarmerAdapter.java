@@ -1,5 +1,6 @@
 package com.example.prateek.farmers;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -9,12 +10,17 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.List;
+
 public class FarmerAdapter extends RecyclerView.Adapter<FarmerAdapter.FarmerViewHolder> {
 
-    private int[] mImages;
-    private String[] mNames;
-    private String[] mStock;
-    private String[] mPorders;
+    private Context mCtx;
+    private List<Crop> cropList;
+
+    public FarmerAdapter(Context mCtx,List<Crop> cropList) {
+        this.mCtx=mCtx;
+        this.cropList = cropList;
+    }
 
     public class FarmerViewHolder extends RecyclerView.ViewHolder{
         public ImageView CropImage;
@@ -31,17 +37,11 @@ public class FarmerAdapter extends RecyclerView.Adapter<FarmerAdapter.FarmerView
     }
 
 
-    public FarmerAdapter( int[] Images, String[] Names, String[] Stock, String[] Porders){
-        mImages=Images;
-        mNames=Names;
-        mStock=Stock;
-        mPorders=Porders;
-    }
     @NonNull
     @Override
     public FarmerViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        Log.i("Info","onCreateViewHolder called");
-        View v =  LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.custom_layout, viewGroup, false);
+        Log.i("Info","onCreateViewHolder called") ;
+        View v =  LayoutInflater.from(mCtx).inflate(R.layout.custom_layout, viewGroup, false);
         FarmerViewHolder farmerViewHolder=new FarmerViewHolder(v);
         return farmerViewHolder;
     }
@@ -49,15 +49,21 @@ public class FarmerAdapter extends RecyclerView.Adapter<FarmerAdapter.FarmerView
     @Override
     public void onBindViewHolder(@NonNull FarmerViewHolder farmerViewHolder, int i) {
         Log.i("Info","onBindViewholder called");
-        farmerViewHolder.CropImage.setImageResource(mImages[i]);
-        farmerViewHolder.Stock.setText(mStock[i]);
-        farmerViewHolder.Name.setText(mNames[i]);
-        farmerViewHolder.Porders.setText(mPorders[i]);
+        Crop crop=cropList.get(i);
+        farmerViewHolder.CropImage.setImageResource(crop.getCrop_image());
+        farmerViewHolder.Stock.setText(crop.getStock());
+        farmerViewHolder.Name.setText(crop.getName());
+        farmerViewHolder.Porders.setText(crop.getPorders());
     }
 
     @Override
     public int getItemCount() {
-        return mImages.length;
+        return cropList.size();
+    }
+
+    public void filterList(List<Crop> filterList){
+        cropList=filterList;
+        notifyDataSetChanged();
     }
 
 }
