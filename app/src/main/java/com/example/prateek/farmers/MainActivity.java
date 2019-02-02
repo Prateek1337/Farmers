@@ -1,5 +1,6 @@
 package com.example.prateek.farmers;
 
+import android.content.Intent;
 import android.os.CpuUsageInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -14,6 +15,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -36,11 +38,10 @@ public class MainActivity extends AppCompatActivity {
         RecyclerView CropList = (RecyclerView) findViewById(R.id.recyclerView);
         cropList=new ArrayList<>();
 
-        cropList.add(new Crop(R.drawable.wheat,"WHEAT","1","2"));
-        cropList.add(new Crop(R.drawable.corn,"CORN","1","2"));
-        cropList.add(new Crop(R.drawable.sugarcane,"SUGARCANE","1","2"));
-        cropList.add(new Crop(R.drawable.rice,"RICE","1","2"));
-        cropList.add(new Crop(R.drawable.dal,"DAL","1","2"));
+        cropList.add(new Crop(R.drawable.wheat,"Wheat","1","2"));
+        cropList.add(new Crop(R.drawable.corn,"Corn","1","2"));
+        cropList.add(new Crop(R.drawable.sugarcane,"Sugarcane","1","2"));
+        cropList.add(new Crop(R.drawable.rice,"Rice","1","2"));
 
         CropList.setLayoutManager(new LinearLayoutManager(this));
         farmerAdapter=new FarmerAdapter(this,cropList);
@@ -62,7 +63,24 @@ public class MainActivity extends AppCompatActivity {
                 filter(s.toString());
             }
         });
+
+        Onclick();
+
+        ImageView profileImage=findViewById(R.id.profileImage);
+        profileImage.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View view){
+                openActivity2();
+            }
+        });
     }
+    public void openActivity2(){
+        Intent intent=new Intent(this,Activity2.class);
+        startActivity(intent);
+    }
+
+
     private void filter(String text){
         List<Crop> filteredList=new ArrayList<>();
         for (Crop crop:cropList){
@@ -71,5 +89,32 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         farmerAdapter.filterList(filteredList);
+    }
+
+    public void Onclick(){
+        farmerAdapter.setOnItemClickListener(new FarmerAdapter.OnItemCLickListener() {
+            @Override
+            public void onItemClick(int position) {
+                int pos=position;
+                Log.i("Item clicked",String.valueOf(pos));
+                if(pos==0){
+                    Intent intent=new Intent(MainActivity.this,WheatActivity.class);
+                    startActivity(intent);
+                }
+                else if(pos==1){
+                    Intent intent=new Intent(MainActivity.this,CornActivity.class);
+                    startActivity(intent);
+                }
+                else if(pos==2){
+                    Intent intent=new Intent(MainActivity.this,SugarcaneActivity.class);
+                    startActivity(intent);
+                }
+                else{
+                    Intent intent=new Intent(MainActivity.this,RiceActivity.class);
+                    startActivity(intent);
+                }
+            }
+        });
+
     }
 }

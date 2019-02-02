@@ -19,7 +19,7 @@ public class Crop {
     }
 
     public String getStock() {
-        return Stock;
+        return "Stock Avaialble:"+Stock;
     }
 
     public String getName() {
@@ -27,6 +27,6 @@ public class Crop {
     }
 
     public String getPorders() {
-        return Porders;
+        return "Pending Orders:"+Porders;
     }
 }
